@@ -1,32 +1,22 @@
-
 class WallpaperModel {
-  final String artId;
-  final String animename;
-  final String arturl;
-  final int sensitivity;
+  final String? id;
+  final String? type;
+  final String file;
+  final String? title;
 
   WallpaperModel({
-    required this.artId,
-    required this.animename,
-    required this.arturl,
-    required this.sensitivity,
+    required this.id,
+    required this.type,
+    required this.file,
+    required this.title,
   });
 
-  factory WallpaperModel.fromMap(Map<String, dynamic> json){
+  factory WallpaperModel.fromMap(Map<String, dynamic> json) {
     return WallpaperModel(
-      artId: json["art_id"],
-      animename: json["animename"],
-      arturl: json["arturl"],
-      sensitivity: json["sensitivity"],
+      id: json["id"],
+      type: json["type"],
+      file: json['attributes']["file"],
+      title: json['attributes']["title"],
     );
   }
 }
-
-
-
-
-
-
-
-
-

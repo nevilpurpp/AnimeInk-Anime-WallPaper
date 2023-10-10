@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:anime_wallpaper/models/api.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shimmer/shimmer.dart';
 import '../models/wallpaper.dart';
 import '../widgets/imgview.dart';
@@ -15,36 +16,65 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
 
-  ScrollController _scrollController = new ScrollController();
+  final ScrollController _scrollController =  ScrollController();
 
  bool enable = true;
-  Future<List<WallpaperModel>> callPizzas() async{
+ int currentPage = 1;
+ int total= 20;
+ bool isLoading = false;
+
+ List<WallpaperModel> animeData = [];
+
+  Future<List<WallpaperModel>> callAnime(int currentPage) async{
     HttpHelper helper = HttpHelper();
-    List<WallpaperModel> pizzas = await helper.getpics();
-    return pizzas;
+    List<WallpaperModel> anime = await helper.getpics();
+    
+    return anime;
 
   }
 
-  @override
+ @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
+        // User has reached the end of the list, load more data
+        if(currentPage != total){
+          currentPage += 1;
+          callAnime(currentPage);
 
+        }
+        if (!isLoading) {
+          loadMoreData();
+        }
       }
+    });
+    // Load initial data
+    loadMoreData();
+  }
+
+  Future<void> loadMoreData() async {
+    setState(() {
+      isLoading = true; // Set the loading flag to true
+    });
+    List<WallpaperModel> newAnimeData = await callAnime(currentPage);
+    setState(() {
+      animeData.addAll(newAnimeData);
+      currentPage+=1; // Increment the current page
+      isLoading = false; // Set the loading flag back to false
+      
     });
   }
 @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xff121212),
       body: SafeArea (
           top: enable,
           bottom: enable,
         child :FutureBuilder(
-        future: callPizzas(),
+        future: callAnime(currentPage),
   builder: (BuildContext context, AsyncSnapshot<List<WallpaperModel>> snapshot) {
 
     if(snapshot.connectionState == ConnectionState.waiting){
@@ -54,16 +84,15 @@ class _HomePageState extends State<HomePage> {
 
           baseColor: Colors.black54,
           highlightColor: Colors.black87,
-          child: GridView.builder(
-            itemCount: 12,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 0.55,
-                mainAxisSpacing: 6,
-                crossAxisSpacing: 6,
-              ),
-              itemBuilder: (context, index ) {return GridTile(
-                 child: Container( color: Colors.white38,));
+          child: MasonryGridView.count(
+            controller: _scrollController ,
+            crossAxisCount: 4,
+            mainAxisSpacing: 6,
+            crossAxisSpacing: 6,
+            itemCount: 100,
+              
+              itemBuilder: (context, index ) {return Card(
+            );
                  }
             ,),
       );
@@ -73,50 +102,62 @@ class _HomePageState extends State<HomePage> {
 
       if(snapshot.hasError) {
         return const Center(child:
-        Text('Server is down.',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),),
+        Text('Server is down.',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,),),
 
         );
       }
       else{
-        return GridView.builder(
+        return MasonryGridView.count(
           controller: _scrollController,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 0.55,
+            crossAxisCount: 4,
             mainAxisSpacing: 6,
             crossAxisSpacing: 6,
-          ),
-          itemBuilder: (BuildContext context, int index){
-            return GridTile(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ImageView(
-                              imgUrl:snapshot.data![index].arturl,
-                            )
-                        )
-                    );
-                  },
+          
+       itemBuilder: (BuildContext context, int index) {
+  if (index >= 0 && index < snapshot.data!.length) {
+    // The index is within the valid range of indices
+    return Card(
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ImageView(
+                imgUrl: snapshot.data![index].file,
+              ),
+            ),
+          );
+        },
+        child: CachedNetworkImage(
+          imageUrl: snapshot.data![index].file,
+          fit: BoxFit.fill,
+        ),
+      ),
+    );
+  } else {
+    // Handle the case where the index is out of bounds
+    if (isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    } else {
+      // Load more data
+      loadMoreData();
+      return const Center(
+        child: Text('Loading more data...'),
+      );
+    }
+  }
+},
 
-                  child: CachedNetworkImage(
-                    imageUrl: snapshot.data![index].arturl,
-                    fit: BoxFit.cover,
-                    placeholder: (context , url) => const Center(child: CircularProgressIndicator()),
-                    //progressIndicatorBuilder: CircularProgressIndicator(),
-                  ),
-                )
-            );
-          },
-          itemCount:  (snapshot.data == null) ? 0 : snapshot.data!.length,
+          itemCount:  isLoading ? animeData.length + 1 : animeData.length
 
         );}
 
     }
 
     else{
-      return const Center(child: Text('No Internet Connection',style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold,color: Colors.white),),);
+      return const Center(child: Text('No Internet Connection',style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold,),),);
     }
         })));
         }

@@ -1,34 +1,49 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'wallpaper.dart';
 
-
-
 class HttpHelper {
+  // ...
 
-  Future <List<WallpaperModel>>  getpics() async {
+  int currentPage = 0; // Track the current page
 
-    int page = 10;
+  Future<List<WallpaperModel>> getpics() async {
+    final result = await http.get(
+      Uri.https(
+        'api.nekosapi.com',
+        '/v2/images',
+        {
+          'page[limit]': '50', // Set the limit per page
+          'page[offset]': '$currentPage', // Set the offset to fetch the next page
+        },
+      ),
+      headers: {
+        'Accept': 'application/vnd.api+json',
+      },
+    );
 
-    final result  = await http.get(
-        Uri.https('premium-anime-mobile-wallpapers-illustrations.p.rapidapi.com','/rapidHandler/boy',{ 'page': '$page', 'sensitivity': '0', 'quality': '1'}),
-        headers: {
-          'X-RapidAPI-Key': 'ddb21d0579mshf7f8641e0bf535ap17f608jsn22697f52464b',
-          'X-RapidAPI-Host': 'premium-anime-mobile-wallpapers-illustrations.p.rapidapi.com'
-        },);
     if (result.statusCode == HttpStatus.ok) {
       final jsonResponse = json.decode(result.body);
-      //provide a type argument to the map method to avoid type
 
-      List<WallpaperModel> pizzas =
-      jsonResponse.map<WallpaperModel>((i) =>
-          WallpaperModel.fromMap(i)).toList();
-      return pizzas;
+      // Increment the current page for the next request
+      currentPage++;
 
-    } else  {
-    return [];
+      // Access the "data" key in the JSON response
+      final data = jsonResponse["data"];
+
+      if (data is List) {
+        // Map the list of objects to WallpaperModel
+        List<WallpaperModel> anime = data
+            .map<WallpaperModel>((i) => WallpaperModel.fromMap(i))
+            .toList();
+        return anime;
+      } else {
+        // Handle the case where "data" is not a List
+        return [];
+      }
+    } else {
+      return [];
     }
-
-  }}
-
+  }
+}
