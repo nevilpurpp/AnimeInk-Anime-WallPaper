@@ -1,4 +1,3 @@
-Sure, here's a description for your AnimeInk app to use on GitHub:
 
 🌟 **AnimeInk: Your Gateway to Anime Art and Wallpapers!** 🌟
 
