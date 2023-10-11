@@ -32,11 +32,12 @@ class _HomePageState extends State<HomePage> {
     return anime;
 
   }
+  
 
  @override
   void initState() {
     super.initState();
-
+loadMoreData();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
@@ -51,8 +52,7 @@ class _HomePageState extends State<HomePage> {
         }
       }
     });
-    // Load initial data
-    loadMoreData();
+    
   }
 
   Future<void> loadMoreData() async {
