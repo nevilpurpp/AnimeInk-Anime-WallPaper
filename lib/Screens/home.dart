@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage> {
  int currentPage = 1;
  int total= 20;
  bool isLoading = false;
+ 
 
  List<WallpaperModel> animeData = [];
 
@@ -37,23 +38,17 @@ class _HomePageState extends State<HomePage> {
  @override
   void initState() {
     super.initState();
-loadMoreData();
-    _scrollController.addListener(() {
+    _scrollController.addListener(() async{
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         // User has reached the end of the list, load more data
-        if(currentPage != total){
-          currentPage += 1;
-          callAnime(currentPage);
-
-        }
-        if (!isLoading) {
-          loadMoreData();
-        }
-      }
+      loadMoreData();
+          }
+          await loadMoreData();
     });
     
   }
+  
 
   Future<void> loadMoreData() async {
     setState(() {
@@ -70,6 +65,9 @@ loadMoreData();
 @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+
+      ),
       body: SafeArea (
           top: enable,
           bottom: enable,
@@ -77,7 +75,7 @@ loadMoreData();
         future: callAnime(currentPage),
   builder: (BuildContext context, AsyncSnapshot<List<WallpaperModel>> snapshot) {
 
-    if(snapshot.connectionState == ConnectionState.waiting){
+    if(snapshot.connectionState == ConnectionState.waiting || isLoading){
 
       return  Shimmer.fromColors(
           enabled: enable,
@@ -91,8 +89,9 @@ loadMoreData();
             crossAxisSpacing: 6,
             itemCount: 100,
               
-              itemBuilder: (context, index ) {return Card(
-            );
+              itemBuilder: (context, index ) {
+                return Card(
+          );
                  }
             ,),
       );
@@ -112,7 +111,7 @@ loadMoreData();
             crossAxisCount: 4,
             mainAxisSpacing: 6,
             crossAxisSpacing: 6,
-          
+       itemCount:  isLoading ? animeData.length + 1 : animeData.length,
        itemBuilder: (BuildContext context, int index) {
   if (index >= 0 && index < snapshot.data!.length) {
     // The index is within the valid range of indices
@@ -136,21 +135,13 @@ loadMoreData();
     );
   } else {
     // Handle the case where the index is out of bounds
-    if (isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    } else {
-      // Load more data
-      loadMoreData();
-      return const Center(
-        child: Text('Loading more data...'),
-      );
-    }
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+    
   }
 },
-
-          itemCount:  isLoading ? animeData.length + 1 : animeData.length
+        
 
         );}
 
