@@ -9,6 +9,8 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../utils/util.dart';
+
 
 class ImageView extends StatefulWidget {
   final String imgUrl;
@@ -27,22 +29,10 @@ class _ImageViewState extends State<ImageView> {
     var file = await DefaultCacheManager().getSingleFile(widget.imgUrl);
     final bool result = await WallpaperManager.setWallpaperFromFile(file.path, location);
     if (result == true){
-    Fluttertoast.showToast(
-      msg: 'Wallpaper is Set successfully',
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.green,
-      textColor: Colors.white,
-    );
+    Utils.showSuccess('wallpaper set successfully');
     }
     else{
-      Fluttertoast.showToast(
-        msg: 'Fail to set wallpaper',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
+      Utils.showError('wallpaper not set');
     }
     print(result);
   Navigator.pop(context);
@@ -54,22 +44,10 @@ class _ImageViewState extends State<ImageView> {
     var file = await DefaultCacheManager().getSingleFile(widget.imgUrl);
     final bool result = await WallpaperManager.setWallpaperFromFile(file.path, location);
     if (result == true){
-      Fluttertoast.showToast(
-        msg: 'Wallpaper is Applied',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-      );
+      Utils.showSuccess('wallpaper set successfully');
     }
     else{
-      Fluttertoast.showToast(
-        msg: 'Fail to set image as wallpaper',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
+    Utils.showError('wallpaper not set');
     }
     Navigator.pop(context);
     print(result);
@@ -83,22 +61,10 @@ class _ImageViewState extends State<ImageView> {
     var file = await DefaultCacheManager().getSingleFile(widget.imgUrl);
     final bool result = await WallpaperManager.setWallpaperFromFile(file.path, location);
     if (result == true){
-      Fluttertoast.showToast(
-        msg: 'Wallpaper is Applied',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-      );
+     Utils.showSuccess('wallpaper set successfully');
     }
     else{
-      Fluttertoast.showToast(
-        msg: 'Fail to set image as wallpaper',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
+      Utils.showError('wallpaper not set');
     }
     Navigator.pop(context);
     print(result);
@@ -112,21 +78,9 @@ _saveimg() async{
   var response = await Dio().get(widget.imgUrl,options: Options(responseType: ResponseType.bytes));
   final result = await ImageGallerySaver.saveImage(Uint8List.fromList(response.data));
   if ( result == false ) {
-    Fluttertoast.showToast(
-      msg: 'Fail to save image',
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-    );
+   Utils.showError('Image not Saved');
   } else{
-    Fluttertoast.showToast(
-      msg: 'Image Saved to Gallery',
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.green,
-      textColor: Colors.white,
-    );
+   Utils.showSuccess('Saved to Gallery');
   }
 
 } else if(status.isDenied) {

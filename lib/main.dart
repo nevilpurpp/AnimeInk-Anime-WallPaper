@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:anime_wallpaper/Screens/Splash.dart';
 
 import 'constants/styles/themes.dart';
+import 'utils/util.dart';
 
 
 void main() {
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
     debugShowCheckedModeBanner: false,
+    scaffoldMessengerKey: Utils.messengerKey,
     theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       home: const Splash(),

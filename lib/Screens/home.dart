@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shimmer/shimmer.dart';
 import '../models/wallpaper.dart';
+import '../utils/util.dart';
 import '../widgets/imgview.dart';
 
 class HomePage extends StatefulWidget {
@@ -42,7 +43,7 @@ class _HomePageState extends State<HomePage> {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         // User has reached the end of the list, load more data
-      loadMoreData();
+      
           }
           await loadMoreData();
     });
@@ -66,6 +67,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('DISCOVER',
+         style:
+          TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+        )),
 
       ),
       body: SafeArea (
@@ -75,7 +82,7 @@ class _HomePageState extends State<HomePage> {
         future: callAnime(currentPage),
   builder: (BuildContext context, AsyncSnapshot<List<WallpaperModel>> snapshot) {
 
-    if(snapshot.connectionState == ConnectionState.waiting || isLoading){
+    if(snapshot.connectionState == ConnectionState.waiting){
 
       return  Shimmer.fromColors(
           enabled: enable,
@@ -141,14 +148,12 @@ class _HomePageState extends State<HomePage> {
     
   }
 },
-        
-
         );}
 
     }
 
     else{
-      return const Center(child: Text('No Internet Connection',style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold,),),);
+      return Utils.showError('No Internet Connection');
     }
         })));
         }
