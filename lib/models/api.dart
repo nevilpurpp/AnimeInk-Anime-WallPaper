@@ -9,6 +9,7 @@ class HttpHelper {
   // ...
 
   int currentPage = 0; // Track the current page
+ 
 
   Future<List<WallpaperModel>> getpics() async {
     final result = await http.get(

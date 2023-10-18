@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
+
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:anime_wallpaper/Screens/home.dart';
-
-
-
+import 'package:flutter/material.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -17,30 +16,30 @@ class _SplashState extends State<Splash> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 3),()=> Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => HomePage())));
+    Timer(
+        const Duration(seconds: 5),
+        () => Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage())));
   }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xff121212),
+    return Scaffold(
+      //backgroundColor: const Color(0xff121212),
       body: Center(
-        child:
-
-        Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Anime Walls',style:TextStyle(fontSize: 50,color: Colors.white,fontWeight: FontWeight.w500) ,),
+            DefaultTextStyle(
+                style: const TextStyle(
+                    fontSize: 50,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500),
+                child: AnimatedTextKit(
+                    animatedTexts: [TypewriterAnimatedText('AnimeInk',speed: const Duration(milliseconds: 800))])),
           ],
         ),
-
-
-
-
-      ) ,
-
-
+      ),
     );
   }
 }
-

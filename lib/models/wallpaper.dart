@@ -1,14 +1,14 @@
 class WallpaperModel {
   final String? id;
   final String? type;
-  final String file;
+  final String? file;
   final String? title;
 
   WallpaperModel({
-    required this.id,
-    required this.type,
-    required this.file,
-    required this.title,
+     this.id,
+     this.type,
+     this.file,
+     this.title,
   });
 
   factory WallpaperModel.fromMap(Map<String, dynamic> json) {
