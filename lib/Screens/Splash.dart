@@ -17,7 +17,7 @@ class _SplashState extends State<Splash> {
     // TODO: implement initState
     super.initState();
     Timer(
-        const Duration(seconds: 5),
+        const Duration(seconds: 4),
         () => Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => HomePage())));
   }
@@ -36,7 +36,7 @@ class _SplashState extends State<Splash> {
                     color: Colors.white,
                     fontWeight: FontWeight.w500),
                 child: AnimatedTextKit(
-                    animatedTexts: [TypewriterAnimatedText('AnimeInk',speed: const Duration(milliseconds: 800))])),
+                    animatedTexts: [TypewriterAnimatedText('AnimeInk',speed: const Duration(milliseconds: 200))])),
           ],
         ),
       ),

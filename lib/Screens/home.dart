@@ -44,7 +44,6 @@ void initState() {
 
 
 
-
 @override
   Widget build(BuildContext context) {
      final dataProvider = Provider.of<GetDataProvider>(context);
@@ -59,7 +58,8 @@ void initState() {
       ),
       
       body: dataProvider.isLoading
-      ?  MasonryGridView.count(
+      ? const Center(child: CircularProgressIndicator())
+      /*MasonryGridView.count(
           controller: _scrollController ,
           crossAxisCount: 4,
           mainAxisSpacing: 6,
@@ -70,6 +70,7 @@ void initState() {
               return loadingShimmer();
             }
       )
+      */
       : MasonryGridView.count(
         controller: _scrollController,
           crossAxisCount: 4,
@@ -115,116 +116,3 @@ void initState() {
       }
     
     }
-    
-   
-        
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      /*
-       FutureBuilder(
-      future:dataProvider.fetchInitialData() ,
-    builder: (BuildContext context, AsyncSnapshot<List<WallpaperModel>> dataProvider) {
-    
-    if(snapshot.connectionState == ConnectionState.waiting){
-    
-      return  Shimmer.fromColors(
-        enabled: true,
-    
-        baseColor: Colors.black54,
-        highlightColor: Colors.black87,
-        child: MasonryGridView.count(
-          controller: _scrollController ,
-          crossAxisCount: 4,
-          mainAxisSpacing: 6,
-          crossAxisSpacing: 6,
-          itemCount: 100,
-            
-            itemBuilder: (context, index ) {
-              return Card(
-        );
-               }
-          ,),
-      );
-    
-    }
-    else if(snapshot.connectionState == ConnectionState.done){
-    
-      if(snapshot.hasError) {
-      return const Center(child:
-      Text('Server is down.',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,),),
-    
-      );
-      }
-      else{
-      return MasonryGridView.count(
-        controller: _scrollController,
-          crossAxisCount: 4,
-          mainAxisSpacing: 6,
-          crossAxisSpacing: 6,
-       itemCount:  isLoading ? animeData.length + 1 : animeData.length,
-     itemBuilder: (BuildContext context, int index) {
-    if (index >= 0 && index < animeData.length) {
-    // The index is within the valid range of indices
-    return Card(
-      child: InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ImageView(
-              imgUrl: animeData[index].file!,
-            ),
-          ),
-        );
-      },
-      child: CachedNetworkImage(
-        imageUrl: animeData[index].file!,
-        fit: BoxFit.fill,
-      ),
-      ),
-    );
-    } else if (isLoading) {
-    // Show a loading indicator while loading more data
-    return Center(
-      child: CircularProgressIndicator(),
-    );
-    } else {
-    // You've reached the end of available data
-    return const Center(
-      child: Text('No more data available'),
-    );
-    }
-    },
-      );}
-    
-    }
-    
-    else{
-      return Utils.showError('No Internet Connection');
-    }
-      }));
-        }
-      }
-      */
-
-      

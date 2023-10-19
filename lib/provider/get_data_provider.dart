@@ -40,6 +40,7 @@ class GetDataProvider with ChangeNotifier {
           {
             'page[limit]': '$limit',
             'page[offset]': '${page * limit}', // Calculate the offset based on the page and limit
+            'filter[ageRating]': 'sfw',
           },
         ),
         headers: {

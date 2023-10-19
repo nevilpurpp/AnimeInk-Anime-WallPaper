@@ -35,7 +35,7 @@ class _ImageViewState extends State<ImageView> {
       Utils.showError('wallpaper not set');
     }
     print(result);
-  Navigator.pop(context);
+ // Navigator.pop(context);
   }
 
   Future<void> setHome() async{
@@ -49,7 +49,7 @@ class _ImageViewState extends State<ImageView> {
     else{
     Utils.showError('wallpaper not set');
     }
-    Navigator.pop(context);
+   // Navigator.pop(context);
     print(result);
 
   }
@@ -95,98 +95,75 @@ else{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-            children: <Widget>[
-              Container(
-                //Height of mobile display
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: CachedNetworkImage(
-                  imageUrl: widget.imgUrl,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator()
-                  ),
-                ),
-              ),
-             //  Positioned(
-             //    top: 50,
-             //
-             //     child: Row(
-             //   mainAxisAlignment: MainAxisAlignment.end,
-             //   children: [
-             //     IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border,),),
-             //    ])
-             // ),
-              Align (
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Container(
-                    //   height: 70,
-                    //   width: 70,
-                    //   color: Colors.black54,
-                    //   child: IconButton(onPressed: (){},
-                    //     icon: Icon(Icons.favorite_border,size: 50,color: Colors.white,),),
-                    // ),
-                   const SizedBox(width: 20,),
-                    Container(
-                      height: 70,
-                      width: 70,
-                      color: Colors.black54,
-                      child: IconButton(onPressed: (){
-                        _saveimg();
-                      },
-                        icon: const Icon(Icons.download,size: 50,color: Colors.white,),),
-                    ),
-                    const SizedBox(width: 20,),
-                    Container(
-                      height: 70,
-                      width: 70,
-                      color: Colors.black54,
-                      child: IconButton(onPressed: (){
-                        showDialog(context: context,
-                            builder: (BuildContext context ){
-                              return SimpleDialog(
-                                backgroundColor: Colors.black,
-                                alignment: Alignment.bottomCenter,
-                                title: const Text('Apply Wallpaper',style:TextStyle(fontWeight: FontWeight.bold,color: Colors.white)),
-                                children: [
-                                  SimpleDialogOption(
-                                    onPressed: (){
-                                      setLock();
-                                      Fluttertoast.showToast(msg: "Wallpaper is applied");
-                                      },
-                                    child: const Text('Lock Screen Wallpaper',style:TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
-                                  ),
-                                  SimpleDialogOption(
-                                    onPressed: (){
-                                      setHome();
-                                      Fluttertoast.showToast(msg: "Wallpaper is applied");
-                                      },
-                                    child: const Text('Home Screen Wallpaper',style:TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
-                                  ),
-                                  SimpleDialogOption(
-                                    onPressed: (){
-                                        setBoth();
-                                       Fluttertoast.showToast(msg: "Wallpaper is applied");
-                                      },
-                                    child: const Text('Both',style:TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
-                                  ),
-                                ],
-                              );
+      appBar: AppBar(
+        //backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: (){Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_ios),
+          )
+      ),
+      floatingActionButton:  FloatingActionButton(
+                onPressed: (){
+                  _saveimg();
 
-                            });
-                      },
-                        icon: const Icon(Icons.crop_free_rounded,size: 50,color: Colors.white,),),
-                    ),
-                  ],
+                },
+                child:
+                const Icon(Icons.download_rounded)
                 ),
-              )
-            ],
-        )
+        body: Stack(
+  children: <Widget>[
+    Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Colors.black.withOpacity(0.6), Colors.black.withOpacity(0.3)],
+        ),
+      ),
+      child: CachedNetworkImage(
+        imageUrl: widget.imgUrl,
+        fit: BoxFit.cover,
+        placeholder: (context, url) => CircularProgressIndicator(), // Use a custom loading animation
+      ),
+    ),
+    Align(
+      alignment: Alignment.bottomLeft,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: OutlinedButton(
+              onPressed: () {
+                setHome();
+              },
+              child: Text(
+                'Set to Home',
+                style: TextStyle(color: Colors.white), // Customize button text color
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                setLock();
+              },
+              child: Text(
+                'Set to LockScreen',
+                style: TextStyle(color: Colors.white), // Customize button text color
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  ],
+)
+
     );
 
   }
