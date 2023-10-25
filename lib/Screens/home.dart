@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:anime_wallpaper/models/api.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shimmer/shimmer.dart';
 import '../provider/get_data_provider.dart';
 import '../utils/shimmer_layout.dart';
 import '../utils/util.dart';
+import '../widgets/drawer_scr.dart';
 import '../widgets/imgview.dart';
 import 'package:provider/provider.dart';
 
@@ -56,6 +56,7 @@ void initState() {
             fontSize: 25,
         )),
       ),
+      drawer: const DrawerScreen(),
       
       body: dataProvider.isLoading
       ? const Center(child: CircularProgressIndicator())

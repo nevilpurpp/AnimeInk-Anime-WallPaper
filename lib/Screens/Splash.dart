@@ -36,7 +36,8 @@ class _SplashState extends State<Splash> {
                     color: Colors.white,
                     fontWeight: FontWeight.w500),
                 child: AnimatedTextKit(
-                    animatedTexts: [TypewriterAnimatedText('AnimeInk',speed: const Duration(milliseconds: 200))])),
+                    animatedTexts: [TypewriterAnimatedText('AnimeInk',speed: 
+                    const Duration(milliseconds: 200))])),
           ],
         ),
       ),
