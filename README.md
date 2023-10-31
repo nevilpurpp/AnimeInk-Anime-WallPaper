@@ -21,6 +21,6 @@ AnimeInk is your ticket to a world of anime-inspired creativity. Join us and tra
 
 _Your journey to a more colorful screen starts here. Download AnimeInk now!_
 
-[![Download on Google Play](https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.yourcompany.animeink)
+[![Download on Google Play](https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.anime_wallpaper.fl)
 
 Feel free to customize it further to match your app's unique features and style. Good luck with your project! 🚀🎉
