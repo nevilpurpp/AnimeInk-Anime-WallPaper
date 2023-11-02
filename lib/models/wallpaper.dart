@@ -1,22 +1,20 @@
 class WallpaperModel {
-  final String? id;
-  final String? type;
-  final String? file;
-  final String? title;
+  final int id;
+  final String idV2;
+  final String imageUrl;
 
   WallpaperModel({
-     this.id,
-     this.type,
-     this.file,
-     this.title,
+     required this.id,
+     required this.idV2,
+     required this.imageUrl,
+    
   });
 
   factory WallpaperModel.fromMap(Map<String, dynamic> json) {
     return WallpaperModel(
-      id: json["id"],
-      type: json["type"],
-      file: json['attributes']["file"],
-      title: json['attributes']["title"],
+    id: json['id'],
+        idV2: json['id_v2'],
+        imageUrl: json['image_url'],
     );
   }
 }

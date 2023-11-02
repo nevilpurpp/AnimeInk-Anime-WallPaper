@@ -19,23 +19,52 @@ class _DrawerScreenState extends State<DrawerScreen> {
     return Drawer(
       child: Center(
         child: SizedBox(
-          height: 200,
+          height: double.infinity,
           width: double.infinity,
-          child: ListView(children: const  [
-            
-             ListTile(
-              title: Text('AnimeInk'),
+          child: ListView(children:  const [
+            SizedBox(height: 50,),
+            SizedBox(
+              height: 200,
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: AssetImage('assets/icons/icon10242.jpeg'),
+                    radius: 80,
+                    ),
+                    Text('AnimeInk-WallPaper App',
+                     style: TextStyle(
+                      fontSize: 25, 
+                      fontWeight: FontWeight.bold
+                      ))
+                ],
+              ),
             ),
-            Divider(),
-            //rate us
-            //Share our app
-       
-            Divider(),
-            //about
+            const Divider(),
              ListTile(
               leading: Icon(Icons.info),
               title:  Text('About Us'),
             ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.message_outlined),
+              title: Text('How can we improve?'),
+              subtitle: Text('Tell us how we can improve this app?'),
+            ),
+            Divider(),
+            //rate us
+            ListTile(
+              leading: Icon(Icons.star),
+              title: Text('Rate app'),
+            ),
+            Divider(),
+            //Share our app
+        ListTile(
+              leading: Icon(Icons.share),
+              title: Text('Share app'),
+              subtitle: Text('Tell us how can we improve this app?'),
+            ),
+            //about
+            
             Divider(),
             //Themes 
             ListTile(

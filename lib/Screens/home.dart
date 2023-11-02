@@ -48,15 +48,6 @@ void initState() {
   Widget build(BuildContext context) {
      final dataProvider = Provider.of<GetDataProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('DISCOVER',
-         style:
-          TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 25,
-        )),
-      ),
-      drawer: const DrawerScreen(),
       
       body: dataProvider.isLoading
       ? const Center(child: CircularProgressIndicator())
@@ -88,13 +79,13 @@ void initState() {
           context,
           MaterialPageRoute(
             builder: (context) => ImageView(
-              imgUrl: dataProvider.animeData[index].file!,
+              imgUrl: dataProvider.animeData[index].imageUrl,
             ),
           ),
         );
       },
       child: CachedNetworkImage(
-        imageUrl: dataProvider.animeData[index].file!,
+        imageUrl: dataProvider.animeData[index].imageUrl,
         fit: BoxFit.fill,
       ),
       ),
