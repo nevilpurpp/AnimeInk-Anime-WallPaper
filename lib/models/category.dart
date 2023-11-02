@@ -1,24 +1,51 @@
 class CategoryModel {
-  final String id;
-  final String name;
-  final bool isNsfw;
-  final List<String> imageIds;
+  final List<CategoryItem> items;
+  final int count;
 
   CategoryModel({
-    required this.id,
-    required this.name,
-    required this.isNsfw,
-    required this.imageIds,
+    required this.items,
+    required this.count,
   });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
+    final List<dynamic> itemsList = json['items'];
+    final List<CategoryItem> categoryItems = itemsList
+        .map((item) => CategoryItem.fromJson(item))
+        .toList();
+
     return CategoryModel(
-      id: json['id'],
-      name: json['attributes']['name'],
-      isNsfw: json['attributes']['isNsfw'],
-      imageIds: (json['relationships']['images']['data'] as List)
-          .map<String>((image) => image['id'] as String)
-          .toList(),
+      items: categoryItems,
+      count: json['count'],
     );
   }
 }
+
+class CategoryItem {
+  final int id;
+  final String idV2;
+  final String name;
+  final String description;
+  final String sub;
+  final bool isNsfw;
+
+  CategoryItem({
+    required this.id,
+    required this.idV2,
+    required this.name,
+    required this.description,
+    required this.sub,
+    required this.isNsfw,
+  });
+
+  factory CategoryItem.fromJson(Map<String, dynamic> json) {
+    return CategoryItem(
+      id: json['id'],
+      idV2: json['id_v2'],
+      name: json['name'],
+      description: json['description'],
+      sub: json['sub'],
+      isNsfw: json['is_nsfw'],
+    );
+  }
+}
+

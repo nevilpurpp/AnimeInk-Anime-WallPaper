@@ -4,8 +4,10 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:anime_wallpaper/Screens/home.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/tab_view.dart';
+
 class Splash extends StatefulWidget {
-  const Splash({Key? key}) : super(key: key);
+  const Splash({super.key});
 
   @override
   State<Splash> createState() => _SplashState();
@@ -19,7 +21,7 @@ class _SplashState extends State<Splash> {
     Timer(
         const Duration(seconds: 4),
         () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage())));
+            context, MaterialPageRoute(builder: (context) => const TabsScreen())));
   }
 
   @override
@@ -37,7 +39,8 @@ class _SplashState extends State<Splash> {
                     fontWeight: FontWeight.w500),
                 child: AnimatedTextKit(
                     animatedTexts: [TypewriterAnimatedText('AnimeInk',speed: 
-                    const Duration(milliseconds: 200))])),
+                    const Duration(milliseconds: 200))]
+                    )),
           ],
         ),
       ),
