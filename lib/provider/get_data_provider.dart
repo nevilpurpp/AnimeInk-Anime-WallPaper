@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/category.dart';
-import '../models/category.dart';
 import '../models/wallpaper.dart';
 import '../utils/util.dart';
 
@@ -40,7 +39,7 @@ class GetDataProvider with ChangeNotifier {
       final result = await http.get(
         Uri.https(
           'api.nekosapi.com',
-          '/v2/images',
+          '/v3/images',
           {
             'page[limit]': '$limit',
             'page[offset]': '${page * limit}', // Calculate the offset based on the page and limit
@@ -48,13 +47,13 @@ class GetDataProvider with ChangeNotifier {
           },
         ),
         headers: {
-          'Accept': 'application/vnd.api+json',
+          'Accept': 'application/json',
         },
       );
 
       if (result.statusCode == HttpStatus.ok) {
         final jsonResponse = json.decode(result.body);
-        final data = jsonResponse['data'];
+        final data = jsonResponse['items'];
 
         if (data is List) {
           return data.map<WallpaperModel>((item) => WallpaperModel.fromMap(item)).toList();
@@ -71,24 +70,56 @@ class GetDataProvider with ChangeNotifier {
 final result = await http.get(
         Uri.https(
           'api.nekosapi.com',
-          '/v2/categories',
+          '/v3/images/tags',
         ),
         headers: {
-          'Accept': 'application/vnd.api+json',
+          'Accept': 'application/json',
         },
       );
 
       if (result.statusCode == HttpStatus.ok) {
         final jsonResponse = json.decode(result.body);
-        final data = jsonResponse['data'];
+        final data = jsonResponse['items'];
 
         if (data is List) {
           return data.map<CategoryModel>((item) => CategoryModel.fromJson(item)).toList();
         }
       }
     }catch(e){
+      print(e);
        Utils.showError(e.toString());
     }
     return [];
 }
+Future<List<WallpaperModel>> getCategoryImages(String categoryId) async {
+  try {
+    final result = await http.get(
+      Uri.https(
+        'api.nekosapi.com',
+        '/v3/images/tags',
+        {
+          
+          'filter[ageRating]': 'sfw',
+        },
+      ),
+      headers: {
+        'Accept': 'application/vnd.api+json',
+      },
+    );
+
+    if (result.statusCode == HttpStatus.ok) {
+      final jsonResponse = json.decode(result.body);
+      final data = jsonResponse['items'];
+
+      if (data is List) {
+        return data.map<WallpaperModel>((item) => WallpaperModel.fromMap(item)).toList();
+      }
+    }
+  } catch (e) {
+    Utils.showError(e.toString());
+  }
+
+  return [];
+}
+
 }
