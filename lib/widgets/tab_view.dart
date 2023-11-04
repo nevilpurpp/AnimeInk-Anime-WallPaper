@@ -19,8 +19,11 @@ class _TabsScreenState extends State<TabsScreen> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          title: const Text('AnimeInk'),
-          bottom:   TabBar(
+          title: const Text('AnimeInk',style: TextStyle(
+            fontSize: 23,
+            fontWeight: FontWeight.bold
+          )),
+          bottom:   const TabBar(
             indicator: BoxDecoration(shape: BoxShape.circle
             ),
             indicatorColor: Color.fromARGB(255, 54, 113, 152),

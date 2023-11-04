@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 
@@ -12,7 +13,24 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
-  
+
+  final Uri emailLaunchUri = Uri(
+    scheme: 'mailto',
+    path: 'nevilpurpp12@gmail.com',
+  );
+
+final Uri ratingUrl = Uri.parse('https://play.google.com/store/apps/details?id=com.anime_wallpaper.fl');
+ Future<void> _launchUrlRating() async {
+  if (!await launchUrl(emailLaunchUri)) {
+    throw Exception('Could not launch $emailLaunchUri');
+  }
+}
+
+  Future<void> _launchUrlMessage() async {
+  if (!await launchUrl(emailLaunchUri)) {
+    throw Exception('Could not launch $emailLaunchUri');
+  }
+}
   @override
   Widget build(BuildContext context) {
  
@@ -21,9 +39,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
         child: SizedBox(
           height: double.infinity,
           width: double.infinity,
-          child: ListView(children:  const [
-            SizedBox(height: 50,),
-            SizedBox(
+          child: ListView(children:  [
+            const SizedBox(height: 50,),
+            const SizedBox(
               height: 200,
               child: Column(
                 children: [
@@ -40,39 +58,55 @@ class _DrawerScreenState extends State<DrawerScreen> {
               ),
             ),
             const Divider(),
-             ListTile(
-              leading: Icon(Icons.info),
-              title:  Text('About Us'),
+             GestureDetector(
+               child: const ListTile(
+                leading: Icon(Icons.info),
+                title:  Text('About Us'),
+                         ),
+             ),
+           const  Divider(),
+           //message us
+            GestureDetector(
+              child: const ListTile(
+                leading: Icon(Icons.message_outlined),
+                title: Text('How can we improve?'),
+                subtitle: Text('Tell us how we can improve this app?'),
+              ),
+              onTap:(){
+                _launchUrlMessage();
+              } ,
             ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.message_outlined),
-              title: Text('How can we improve?'),
-              subtitle: Text('Tell us how we can improve this app?'),
-            ),
-            Divider(),
+            const Divider(),
             //rate us
-            ListTile(
-              leading: Icon(Icons.star),
-              title: Text('Rate app'),
+            GestureDetector(
+              child: const ListTile(
+                leading: Icon(Icons.star),
+                title: Text('Rate app'),
+              ),
+              onTap: (){
+                _launchUrlRating();
+              }
             ),
-            Divider(),
+            const Divider(),
             //Share our app
-        ListTile(
-              leading: Icon(Icons.share),
-              title: Text('Share app'),
-              subtitle: Text('Tell us how can we improve this app?'),
-            ),
+        GestureDetector(
+          child: const ListTile(
+            shape: StadiumBorder(),
+                leading: Icon(Icons.share),
+                title: Text('Share app'),
+                subtitle: Text('Tell us how can we improve this app?', style: TextStyle(color: Colors.white24),),
+              ),
+        ),
             //about
             
-            Divider(),
+            const Divider(),
             //Themes 
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.light),
               title: Text('Theme'),
             //trailing:       ,
             ),
-            Divider(),
+            const Divider(),
           ]),
         ),
       ),

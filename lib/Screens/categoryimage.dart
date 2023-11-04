@@ -24,7 +24,7 @@ class _CategoryImagePageState extends State<CategoryImagePage> {
   }
 
   Future<void> fetchCategoryImages() async {
-    final images = await dataProvider.getCategoryImages(widget.category.items as String);
+    final images = await dataProvider.getCategoryImages(widget.category.id.toString());
     setState(() {
       categoryImages = images;
     });
@@ -35,10 +35,14 @@ class _CategoryImagePageState extends State<CategoryImagePage> {
   
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.category.items as String),
+        title: Text(widget.category.name!),
       ),
-      body: Center(
-        child: Text('Images for ${widget.category.items}'),
+      body: ListView.builder(
+        itemCount: categoryImages.length,
+        itemBuilder: (context, index) {
+          final wallpaper = categoryImages[index];
+          return Image.network(wallpaper.imageUrl);
+        },
       ),
     );
   }

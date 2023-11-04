@@ -32,8 +32,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// ToDo add theme provider,
-//category,home, settings tabbar
-//image view screen design Change,
-//add admob
-//publishing.
+//Drawer
+
+  //set about us,
+  //theme
+  //rating
+  //

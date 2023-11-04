@@ -41,8 +41,8 @@ late List<CategoryModel> categories;
       width: double.infinity,
       child: categoryData.isEmpty
           ? const Center(child:
-           //CircularProgressIndicator()
-           Text('Coming Soon')
+           CircularProgressIndicator()
+          
            )
           : GridView.builder(
               scrollDirection: Axis.vertical,
@@ -51,9 +51,9 @@ late List<CategoryModel> categories;
                 crossAxisCount: 2,
               ),
               itemBuilder: (context, index) {
-                final category = categoryData[index].items;
+                final category = categoryData[index];
                 return GestureDetector(
-                  onTap: () => _onCategoryTapped(category as CategoryModel),
+                  onTap: () => _onCategoryTapped(category),
                   child: Card(
                     child: SizedBox(
                       height: 100,
@@ -61,7 +61,7 @@ late List<CategoryModel> categories;
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(category.length.toString()),
+                          Text(category.name!),
                         ],
                       ),
                     ),
