@@ -90,15 +90,10 @@ void initState() {
       ),
       ),
     );
-    } else if (isLoading) {
+    } else  {
     // Show a loading indicator while loading more data
     return const Center(
       child: CircularProgressIndicator(),
-    );
-    } else {
-    // You've reached the end of available data
-    return const Center(
-      child: Text('No more data available'),
     );
     }
     },

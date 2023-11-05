@@ -17,4 +17,6 @@ class WallpaperModel {
         imageUrl: json['image_url'],
     );
   }
+
+  static fromJson(item) {}
 }

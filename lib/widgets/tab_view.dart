@@ -23,20 +23,20 @@ class _TabsScreenState extends State<TabsScreen> {
             fontSize: 23,
             fontWeight: FontWeight.bold
           )),
-          bottom:   const TabBar(
+          bottom:    TabBar(
             indicator: BoxDecoration(shape: BoxShape.circle
             ),
-            indicatorColor: Color.fromARGB(255, 54, 113, 152),
+            indicatorColor: const Color(0xFF273141),
+            splashBorderRadius: BorderRadius.circular(50),
+            
               tabs: [
-                ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  child: Tab(text: 'Home')),
+                Tab(text: 'Home'),
                 Tab(text: 'Categories'),
               ],
             ),
         ) ,
         drawer: const DrawerScreen(),
-        body: TabBarView(children: [
+        body: const TabBarView(children: [
           HomePage(),
           CategoryScreen(),
 

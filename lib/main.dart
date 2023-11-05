@@ -25,16 +25,24 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       scaffoldMessengerKey: Utils.messengerKey,
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
-        darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+        darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme).copyWith(
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: <TargetPlatform, PageTransitionsBuilder>{
+            TargetPlatform.android: ZoomPageTransitionsBuilder(),
+          },
+        ),
+      ),
         home: const Splash(),
       ),
     );
   }
 }
-
+//To Do
 //Drawer
 
   //set about us,
   //theme
   //rating
-  //
+ 
+//Utils
+   // //no internet connection widget
