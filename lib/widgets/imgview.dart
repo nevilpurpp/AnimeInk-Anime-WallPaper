@@ -140,7 +140,7 @@ else{
               onPressed: () {
                 setHome();
               },
-              child: Text(
+              child: const Text(
                 'Set to Home',
                 style: TextStyle(color: Colors.white), // Customize button text color
               ),
@@ -152,7 +152,7 @@ else{
               onPressed: () {
                 setLock();
               },
-              child: Text(
+              child:const  Text(
                 'Set to LockScreen',
                 style: TextStyle(color: Colors.white), // Customize button text color
               ),

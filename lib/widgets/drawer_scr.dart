@@ -77,8 +77,9 @@ final Uri ratingUrl = Uri.parse('https://play.google.com/store/apps/details?id=c
                 context: context,
                 builder: (context) {
                   return AboutDialogue(
-                    title: 'Custom Dialogue',
-                    content: 'This is a custom dialogue.',
+                    title: 'AnimeInk',
+                    content: 'Made with ❤️👨‍💻 by FlutterWars, Inc',
+                    info: '© 2023 AnimeInk, All rights reserved',
                     onClose: () {
                       Navigator.of(context).pop();
                     },
