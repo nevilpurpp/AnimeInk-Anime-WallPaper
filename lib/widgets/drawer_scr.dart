@@ -21,12 +21,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
     path: 'nevilpurpp12@gmail.com',
   );
 
-final Uri ratingUrl = Uri.parse('https://play.google.com/store/apps/details?id=com.anime_wallpaper.fl');
- Future<void> _launchUrlRating() async {
-  if (!await launchUrl(ratingUrl)) {
-    throw Exception('Could not launch $ratingUrl');
-  }
-}
+
 
   Future<void> _launchUrlMessage() async {
   if (!await launchUrl(emailLaunchUri)) {
@@ -121,7 +116,7 @@ final Uri ratingUrl = Uri.parse('https://play.google.com/store/apps/details?id=c
                 ),
               ),
               onTap: (){
-                _launchUrlRating();
+                
               }
             ),
            

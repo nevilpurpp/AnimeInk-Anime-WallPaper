@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/category.dart';
@@ -11,8 +13,9 @@ class GetDataProvider with ChangeNotifier {
   List<WallpaperModel> animeData = [];
   List<CategoryModel> categoryData = [];
   
-  int currentPage = 1;
-  int pageSize = 10; // Set the limit per page
+    
+  int currentPage = 3;
+  int pageSize = 40; // Set the limit per page
   bool isLoading = false;
   bool hasMoreData = true;
   
@@ -44,7 +47,7 @@ class GetDataProvider with ChangeNotifier {
           {
             'page[limit]': '$limit',
             'page[offset]': '${page * limit}', // Calculate the offset based on the page and limit
-            'filter[ageRating]': 'sfw',
+            //'filter[ageRating]': 'sfw',
           },
         ),
         headers: {
@@ -91,7 +94,9 @@ final result = await http.get(
         }
       }
     }catch(e){
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
        Utils.showError(e.toString());
     }
     return [];
@@ -140,7 +145,9 @@ final result = await http.get(
         }
       }
     } catch (e) {
-      print('Error fetching category images: $e');
+      if (kDebugMode) {
+        print('Error fetching category images: $e');
+      }
     }
 
     return [];
